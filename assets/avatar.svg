@@ -10,9 +10,13 @@
       <stop offset="0.4" stop-color="#ffffff" stop-opacity="0.08"/>
       <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
     </radialGradient>
+    <clipPath id="circ"><circle cx="128" cy="128" r="128"/></clipPath>
   </defs>
-  <rect width="256" height="256" rx="128" fill="url(#g)"/>
-  <rect width="256" height="256" rx="128" fill="url(#gloss)"/>
-  <text x="50%" y="53%" font-family="'Segoe UI', Arial, sans-serif" font-size="96" font-weight="800"
-        fill="#ffffff" fill-opacity="0.92" text-anchor="middle" dominant-baseline="middle">P5</text>
+  <!-- всё внутри круга; углы прозрачные -> отображается круглым везде -->
+  <g clip-path="url(#circ)">
+    <circle cx="128" cy="128" r="128" fill="url(#g)"/>
+    <circle cx="128" cy="128" r="128" fill="url(#gloss)"/>
+    <text x="50%" y="53%" font-family="'Segoe UI', Arial, sans-serif" font-size="96" font-weight="800"
+          fill="#ffffff" fill-opacity="0.92" text-anchor="middle" dominant-baseline="middle">P5</text>
+  </g>
 </svg>

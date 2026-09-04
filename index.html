@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>player5rp</title>
-<meta name="description" content="player5rp — guns.lol on top">
+<meta name="description" content="player5rp — Claude on top">
 <meta property="og:title" content="player5rp">
-<meta property="og:description" content="guns.lol on top">
+<meta property="og:description" content="Claude on top">
 <meta property="og:image" content="assets/album.webp">
 <meta name="theme-color" content="#0a0a0a">
-<link rel="icon" href="assets/avatar.svg">
+<link rel="icon" href="assets/background.webp">
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=chillax@400,500,600,700&display=swap" rel="stylesheet">
 <style>
@@ -39,6 +39,12 @@ body{
   -webkit-user-select:none; user-select:none;
 }
 
+/* картинки нельзя выделять и перетаскивать */
+img{-webkit-user-drag:none; -khtml-user-drag:none; user-select:none; -webkit-user-select:none; pointer-events:none;}
+
+/* когда рисуем свой курсор — прячем системный ВЕЗДЕ (в т.ч. на кнопках/ссылках) */
+html.cc, html.cc *{cursor:none !important;}
+
 /* night background canvas */
 #night{position:fixed; inset:0; z-index:-1; pointer-events:none;}
 
@@ -47,15 +53,15 @@ body{
   align-items:center; justify-content:center; gap:10px; cursor:pointer; text-align:center; padding:20px;
   background:rgba(10,10,10,0.88); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
   transition:opacity .6s ease, visibility .6s;}
-#enter.hide{opacity:0; visibility:hidden;}
+#enter.hide{opacity:0; visibility:hidden; pointer-events:none;}
 #enter .et{font-size:clamp(26px,6vw,40px); font-weight:600; letter-spacing:.5px;}
 #enter .es{color:var(--muted); font-size:13px; letter-spacing:3px; text-transform:uppercase; animation:blk 1.6s ease-in-out infinite;}
 @keyframes blk{50%{opacity:.4;}}
 
 /* ---------- Wrapper (parallax) ---------- */
-.stage{perspective:900px;}
+.stage{width:100%; display:flex; justify-content:center; perspective:900px;}
 .wrap{width:100%; max-width:660px; display:flex; flex-direction:column; gap:14px;
-  transform-style:preserve-3d; opacity:0; transition:opacity .5s ease;}
+  transform-style:preserve-3d; will-change:transform; opacity:0; transition:opacity .5s ease;}
 .wrap.show{opacity:1;}
 
 /* pop entrance (animation:"pop") */
@@ -81,8 +87,8 @@ body{
   transition:transform .15s ease, background .15s;}
 .badge:hover{transform:translateY(-2px) scale(1.08); background:rgba(255,255,255,0.13);}
 .badge svg{width:19px; height:19px; filter:drop-shadow(0 0 2.5px rgba(255,255,255,0.85));}
-.badge.claude{color:#e08a63;}
-.badge.claude svg{filter:drop-shadow(0 0 4px rgba(224,138,99,0.9));}
+.badge.claude{color:#d97757;}
+.badge.claude svg{filter:drop-shadow(0 0 4px rgba(217,119,87,0.9));}
 .badge .tip{position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%) translateY(4px);
   background:#1a1a1a; border:1px solid #2c2c2c; color:#fff; padding:4px 8px; border-radius:7px;
   font-size:11px; font-weight:500; white-space:nowrap; opacity:0; pointer-events:none; transition:.16s;
@@ -115,10 +121,15 @@ body{
 
 /* social */
 .socials{display:flex; align-items:center; gap:20px; justify-content:center; margin-top:20px;}
-.socials a{color:#fff; width:24px; height:24px; display:inline-flex;
+.socials a{color:#fff; width:24px; height:24px; display:inline-flex; position:relative;
   filter:drop-shadow(0 0 5px rgba(158,158,255,0.85)); transition:transform .16s ease, filter .16s;}
 .socials a:hover{transform:translateY(-3px) scale(1.12); filter:drop-shadow(0 0 10px rgba(158,158,255,1));}
 .socials a svg{width:100%; height:100%;}
+.socials a .tip{position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%);
+  background:#1a1a1a; border:1px solid #2c2c2c; color:#fff; padding:4px 8px; border-radius:7px;
+  font-size:11px; font-weight:500; white-space:nowrap; opacity:0; pointer-events:none; transition:.16s;
+  filter:none; box-shadow:0 6px 16px rgba(0,0,0,0.5);}
+.socials a:hover .tip{opacity:1;}
 
 /* meta */
 .meta-row{display:flex; align-items:center; justify-content:center; gap:14px; margin-top:18px; font-size:15px; color:#ededed;}
@@ -146,10 +157,28 @@ body{
 
 .foot{text-align:center; font-size:11px; color:var(--muted-2); margin-top:2px;}
 
+/* ---------- телефоны ---------- */
 @media(max-width:560px){
-  .header{gap:16px;} .avatar{width:88px; height:88px;} .username{font-size:27px;}
-  .digital{font-size:21px;} .player{flex-wrap:wrap;} .p-mid{order:3; flex-basis:100%;}
+  body{padding:16px 12px;}
+  .card{padding:20px 16px 16px; border-radius:14px;}
+  .header{gap:14px;}
+  .avatar{width:76px; height:76px;}
+  .username{font-size:25px;}
+  .badge{width:27px; height:27px;} .badge svg{width:17px; height:17px;}
+  .tagline{font-size:14px;}
+  .block{padding:12px 14px; border-radius:16px;}
+  .dc-ava{width:48px; height:48px;}
+  .analog{width:62px; height:62px;}
+  .digital{font-size:21px;} .date-line{font-size:13px;}
+  .socials{gap:16px; margin-top:16px;} .socials a{width:22px; height:22px;}
+  .player{gap:12px; padding:12px; flex-wrap:wrap;}
+  .p-mid{order:3; flex-basis:100%; margin-top:4px;}
+  .cover{width:52px; height:52px;}
+  /* лёгче для GPU телефона: слабее размытие стекла */
+  .glass{backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);}
 }
+/* устройства без наведения (тач) — снижаем нагрузку */
+@media(hover:none){ .glass{backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);} }
 </style>
 </head>
 <body oncontextmenu="return false">
@@ -217,7 +246,7 @@ body{
       <span class="sep"></span>
       <span class="item">
         <svg viewBox="4 2 16 20" fill="currentColor"><path d="M12 12q.825 0 1.413-.587T14 10t-.587-1.412T12 8t-1.412.588T10 10t.588 1.413T12 12m0 10q-4.025-3.425-6.012-6.362T4 10.2q0-3.75 2.413-5.975T12 2t5.588 2.225T20 10.2q0 2.5-1.987 5.438T12 22"/></svg>
-        <span id="loc">guns.lol HQ</span>
+        <span id="loc">Claude</span>
       </span>
     </div>
   </div>
@@ -258,31 +287,29 @@ body{
    ===================================================================== */
 const CONFIG = {
   username:   "player5rp",
-  taglines:   ["guns.lol on top","discord.gg/guns"],  // как в референсе
+  taglines:   ["Claude on top","discord.gg/player_5rp"],
   avatar:     "assets/background.webp",
   discordName:"player5rp",
   discordAvatar:"assets/discord.png",
   lastSeen:   "last seen 15 hours ago",
   timezone:   "Europe/Moscow",       // московское время
-  location:   "guns.lol HQ",
+  location:   "Claude",
   profileViews: 78854,
   footer:     "player5rp",
   protect:    true,   // блок ПКМ/F12/Ctrl+U (только затруднение)
 
-  // Verified оставлен + добавлена вторая "галочка" — Claude Coder
-  badges: ["staff","bughunter","verified","claudecoder","og","summer"],
+  // только 2 бейджа: Verified + Claude Coder
+  badges: ["verified","claudecoder"],
   socials: [
-    { type:"discord",  href:"https://discord.com/users/player5rp" },
-    { type:"github",   href:"https://github.com/player5rp" },
-    { type:"mail",     href:"mailto:rozigrish312@gmail.com" },
-    { type:"telegram", href:"https://t.me/player5rp" },
-    { type:"website",  href:"https://example.com" },
+    { type:"discord",  copy:"player_5rp" },                    // клик — копирует ник
+    { type:"github",   href:"https://github.com/oxy-5rp" },
+    { type:"telegram", href:"https://t.me/nihiv" },
+    { type:"mail",     href:"mailto:tgpremys@gmail.com" },
   ],
   music: {
     title:  "GREECE (feat. Drake)",
     cover:  "assets/album.webp",
-    // реальный трек из референса (можно заменить на assets/song.mp3):
-    src:    "https://r2.guns.lol/66678710-76b0-4452-9758-6ac0bf2c2add.mp3",
+    src:    "assets/song.mp3",   // локальный файл — все ассеты у тебя, сайт автономный
     fallbackDuration: 219,
   },
 };
@@ -294,17 +321,9 @@ const BADGE_SVG = {
   verified:  ['1 1.5 22 21',"m8.6 22.5l-1.9-3.2l-3.6-.8l.35-3.7L1 12l2.45-2.8l-.35-3.7l3.6-.8l1.9-3.2L12 2.95l3.4-1.45l1.9 3.2l3.6.8l-.35 3.7L23 12l-2.45 2.8l.35 3.7l-3.6.8l-1.9 3.2l-3.4-1.45l-3.4 1.45Zm2.35-6.95L16.6 9.9l-1.4-1.45l-4.25 4.25l-2.15-2.1L7.4 12l3.55 3.55Z","Verified"],
   og:        ['4.39 2 15.22 20.97',"m12 8.5l2.116 5.088l5.492.44l-4.184 3.585l1.278 5.36L12 20.1l-4.702 2.872l1.278-5.36l-4.184-3.584l5.492-.44L12 8.5ZM8 2v9H6V2h2Zm10 0v9h-2V2h2Zm-5 0v5h-2V2h2Z","OG"],
   summer:    ['0 0 24 24',"M12 5q-.425 0-.712-.288T11 4V2q0-.425.288-.712T12 1q.425 0 .713.288T13 2v2q0 .425-.288.713T12 5m4.95 2.05q-.275-.275-.275-.687t.275-.713l1.4-1.425q.3-.3.712-.3t.713.3q.275.275.275.7t-.275.7L18.35 7.05q-.275.275-.7.275t-.7-.275M20 13q-.425 0-.713-.288T19 12q0-.425.288-.712T20 11h2q.425 0 .713.288T23 12q0 .425-.288.713T22 13zm-8 10q-.425 0-.712-.288T11 22v-2q0-.425.288-.712T12 19q.425 0 .713.288T13 20v2q0 .425-.288.713T12 23M5.65 7.05l-1.425-1.4q-.3-.3-.3-.725t.3-.7q.275-.275.7-.275t.7.275L7.05 5.65q.275.275.275.7t-.275.7q-.3.275-.7.275t-.7-.275m12.7 12.725l-1.4-1.425q-.275-.3-.275-.712t.275-.688q.275-.275.688-.275t.712.275l1.425 1.4q.3.275.288.7t-.288.725q-.3.3-.725.3t-.7-.3M2 13q-.425 0-.712-.288T1 12q0-.425.288-.712T2 11h2q.425 0 .713.288T5 12q0 .425-.288.713T4 13zm2.225 6.775q-.275-.275-.275-.7t.275-.7L5.65 16.95q.275-.275.687-.275t.713.275q.3.3.3.713t-.3.712l-1.4 1.4q-.3.3-.725.3t-.7-.3M12 18q-2.5 0-4.25-1.75T6 12t1.75-4.25T12 6t4.25 1.75T18 12t-1.75 4.25T12 18","Summer 2026"],
-  // Claude (Anthropic) sunburst — генерируется отдельно
-  claudecoder:['claude',"","Claude Coder"],
+  // официальный логотип Claude (Anthropic) — 1:1
+  claudecoder:['0 0 24 24',"m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z","Claude Coder"],
 };
-// Claude sunburst как набор лучей (иконка Claude)
-function claudeSunburst(){
-  let rays=''; const n=11;
-  for(let i=0;i<n;i++){const a=i*(360/n)*Math.PI/180;
-    const x1=12+Math.cos(a)*3.2, y1=12+Math.sin(a)*3.2, x2=12+Math.cos(a)*10.5, y2=12+Math.sin(a)*10.5;
-    rays+=`<line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>`;}
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">${rays}</svg>`;
-}
 const SOCIAL_SVG = {
   discord:  ['1.96 4.26 20.03 15.53',"M14.82 4.26a10.14 10.14 0 0 0-.53 1.1a14.66 14.66 0 0 0-4.58 0a10.14 10.14 0 0 0-.53-1.1a16 16 0 0 0-4.13 1.3a17.33 17.33 0 0 0-3 11.59a16.6 16.6 0 0 0 5.07 2.59A12.89 12.89 0 0 0 8.23 18a9.65 9.65 0 0 1-1.71-.83a3.39 3.39 0 0 0 .42-.33a11.66 11.66 0 0 0 10.12 0q.21.18.42.33a10.84 10.84 0 0 1-1.71.84a12.41 12.41 0 0 0 1.08 1.78a16.44 16.44 0 0 0 5.06-2.59a17.22 17.22 0 0 0-3-11.59a16.09 16.09 0 0 0-4.09-1.35zM8.68 14.81a1.94 1.94 0 0 1-1.8-2a1.93 1.93 0 0 1 1.8-2a1.93 1.93 0 0 1 1.8 2a1.93 1.93 0 0 1-1.8 2zm6.64 0a1.94 1.94 0 0 1-1.8-2a1.93 1.93 0 0 1 1.8-2a1.92 1.92 0 0 1 1.8 2a1.92 1.92 0 0 1-1.8 2z"],
   github:   ['2.05 2 19.95 19.46',"M12.026 2c-5.509 0-9.974 4.465-9.974 9.974c0 4.406 2.857 8.145 6.821 9.465c.499.09.679-.217.679-.481c0-.237-.008-.865-.011-1.696c-2.775.602-3.361-1.338-3.361-1.338c-.452-1.152-1.107-1.459-1.107-1.459c-.905-.619.069-.605.069-.605c1.002.07 1.527 1.028 1.527 1.028c.89 1.524 2.336 1.084 2.902.829c.091-.645.351-1.085.635-1.334c-2.214-.251-4.542-1.107-4.542-4.93c0-1.087.389-1.979 1.024-2.675c-.101-.253-.446-1.268.099-2.64c0 0 .837-.269 2.742 1.021a9.582 9.582 0 0 1 2.496-.336a9.554 9.554 0 0 1 2.496.336c1.906-1.291 2.742-1.021 2.742-1.021c.545 1.372.203 2.387.099 2.64c.64.696 1.024 1.587 1.024 2.675c0 3.833-2.33 4.675-4.552 4.922c.355.308.675.916.675 1.846c0 1.334-.012 2.41-.012 2.737c0 .267.178.577.687.479C19.146 20.115 22 16.379 22 11.974C22 6.465 17.535 2 12.026 2z"],
@@ -327,9 +346,14 @@ $('loc').textContent = CONFIG.location;
 $('foot').textContent = CONFIG.footer;
 document.title = CONFIG.username;
 $('badges').innerHTML = CONFIG.badges.map(k=>{const b=BADGE_SVG[k]; if(!b) return '';
-  const isClaude=b[0]==='claude'; const icon=isClaude?claudeSunburst():svg(b[0],b[1]);
-  return `<span class="badge${isClaude?' claude':''}">${icon}<span class="tip">${b[2]}</span></span>`;}).join('');
-$('socials').innerHTML = CONFIG.socials.map(s=>{const ic=SOCIAL_SVG[s.type]; return ic?`<a href="${s.href}" target="_blank" rel="noopener" aria-label="${s.type}">${svg(ic[0],ic[1])}</a>`:'';}).join('');
+  const isClaude=k==='claudecoder';
+  return `<span class="badge${isClaude?' claude':''}">${svg(b[0],b[1])}<span class="tip">${b[2]}</span></span>`;}).join('');
+$('socials').innerHTML = CONFIG.socials.map(s=>{const ic=SOCIAL_SVG[s.type]; if(!ic) return '';
+  if(s.copy) return `<a href="#" data-copy="${s.copy}" aria-label="${s.type}">${svg(ic[0],ic[1])}<span class="tip">${s.copy}</span></a>`;
+  return `<a href="${s.href}" target="_blank" rel="noopener" aria-label="${s.type}">${svg(ic[0],ic[1])}</a>`;}).join('');
+$('socials').addEventListener('click',e=>{const a=e.target.closest('[data-copy]'); if(!a)return; e.preventDefault();
+  try{navigator.clipboard.writeText(a.dataset.copy);}catch(_){}
+  const t=a.querySelector('.tip'); if(t){const o=t.textContent; t.textContent='copied!'; setTimeout(()=>t.textContent=o,1200);} });
 const ticks=$('ticks');
 for(let i=0;i<12;i++){const a=i*30*Math.PI/180;
   const x1=35+Math.sin(a)*30, y1=35-Math.cos(a)*30, x2=35+Math.sin(a)*(i%3===0?25:27), y2=35-Math.cos(a)*(i%3===0?25:27);
@@ -353,19 +377,36 @@ function updateClock(){const d=new Date(), o=tzParts(CONFIG.timezone); let hh,mm
   const off=-d.getTimezoneOffset()/60; $('your-time').textContent=`Your time: ${d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} (${off>=0?'+':''}${off}h)`;}
 updateClock(); setInterval(updateClock,1000);
 
-/* ---------- profile views ---------- */
-(function(){let stored=+localStorage.getItem('p5_views')||0; const base=Math.max(CONFIG.profileViews,stored)+1;
-  localStorage.setItem('p5_views',base); const el=$('views'), from=Math.max(0,base-1500), start=performance.now(), dur=1400;
-  (function step(t){const p=Math.min(1,(t-start)/dur); el.textContent=Math.floor(from+(base-from)*(1-Math.pow(1-p,3))).toLocaleString('en-US'); if(p<1)requestAnimationFrame(step);})(start);})();
+/* ---------- profile views (реальный общий счётчик) ---------- */
+(function(){
+  const el=$('views');
+  function animateTo(v){ v=Math.max(0,Math.floor(v));
+    const from=Math.max(0,v-1500), start=performance.now(), dur=1400;
+    (function step(t){const p=Math.min(1,(t-start)/dur);
+      el.textContent=Math.floor(from+(v-from)*(1-Math.pow(1-p,3))).toLocaleString('en-US');
+      if(p<1)requestAnimationFrame(step);})(start);
+  }
+  const ns=(location.hostname||'local').replace(/[^a-z0-9]/gi,'-').toLowerCase()||'local';
+  // Abacus: +1 на каждый визит, общий счётчик для всех. При офлайне — фолбэк на число из CONFIG.
+  fetch(`https://abacus.jasoncameron.dev/hit/${ns}-player5rp/views`)
+    .then(r=>r.json()).then(d=>animateTo((d&&typeof d.value==='number')?d.value:CONFIG.profileViews))
+    .catch(()=>animateTo(CONFIG.profileViews));
+})();
 
 /* ---------- night background (background_effects:"night") ---------- */
 (function(){
-  const cv=$('night'), ctx=cv.getContext('2d'); let W,H,stars=[],shoot=null,last=0;
+  const cv=$('night'), ctx=cv.getContext('2d'); let W,H,stars=[],shoot=null,last=0,lastDraw=0;
+  const MOB=matchMedia('(hover:none), (max-width:560px)').matches;
+  const DENS=MOB?22000:13000, THR=MOB?66:45;   // на телефоне меньше звёзд и реже перерисовка
   function resize(){W=cv.width=innerWidth; H=cv.height=innerHeight;
-    stars=[]; const n=Math.round(W*H/9000);
+    stars=[]; const n=Math.round(W*H/DENS);
     for(let i=0;i<n;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+0.3,tw:Math.random()*Math.PI*2,sp:0.6+Math.random()*1.4});}
   resize(); addEventListener('resize',resize);
   function loop(t){
+    requestAnimationFrame(loop);
+    // троттлинг: звёзды за стеклом заставляют браузер пере-размывать backdrop,
+    // поэтому не рисуем каждый кадр — так курсор и кнопки не тормозят
+    if(t-lastDraw<THR) return; lastDraw=t;
     ctx.clearRect(0,0,W,H);
     for(const s of stars){const a=0.35+0.45*(0.5+0.5*Math.sin(s.tw+t*0.001*s.sp));
       ctx.globalAlpha=a; ctx.fillStyle='#ffffff'; ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,6.283); ctx.fill();}
@@ -376,18 +417,24 @@ updateClock(); setInterval(updateClock,1000);
       g.addColorStop(0,'rgba(255,255,255,'+shoot.life+')'); g.addColorStop(1,'rgba(255,255,255,0)');
       ctx.strokeStyle=g; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(shoot.x,shoot.y); ctx.lineTo(shoot.x-shoot.vx*8,shoot.y-shoot.vy*8); ctx.stroke();
       shoot.x+=shoot.vx; shoot.y+=shoot.vy; shoot.life-=0.012; if(shoot.life<=0||shoot.x>W||shoot.y>H)shoot=null;}
-    requestAnimationFrame(loop);
   }
   requestAnimationFrame(loop);
 })();
 
 /* ---------- parallax (parallax_animation:true) ---------- */
 (function(){
-  if(matchMedia('(pointer:coarse)').matches) return;
-  const wrap=$('wrap'); let tx=0,ty=0,cx=0,cy=0;
-  addEventListener('mousemove',e=>{tx=(e.clientX/innerWidth-0.5)*2; ty=(e.clientY/innerHeight-0.5)*2;});
-  (function loop(){cx+=(tx-cx)*0.06; cy+=(ty-cy)*0.06;
-    wrap.style.transform=`rotateY(${cx*5}deg) rotateX(${-cy*5}deg)`; requestAnimationFrame(loop);})();
+  if(matchMedia('(pointer:coarse)').matches) return;   // на телефонах не нужен
+  const w=$('wrap'); let tx=0,ty=0,cx=0,cy=0, hot=false;
+  // пока курсор над кнопкой/иконкой — замораживаем наклон, чтобы элемент не «уезжал»
+  // из-под мыши и наведение считывалось стабильно
+  document.addEventListener('mouseover',e=>{ if(e.target.closest('a,button,.badge')) hot=true; });
+  document.addEventListener('mouseout',e=>{ const to=e.relatedTarget;
+    if(!to || !(to.closest&&to.closest('a,button,.badge'))) hot=false; });
+  addEventListener('mousemove',e=>{ if(hot) return;
+    tx=(e.clientX/innerWidth-0.5)*2; ty=(e.clientY/innerHeight-0.5)*2; },{passive:true});
+  (function loop(){cx+=(tx-cx)*0.07; cy+=(ty-cy)*0.07;
+    w.style.transform=`rotateY(${(cx*5).toFixed(2)}deg) rotateX(${(-cy*5).toFixed(2)}deg)`;
+    requestAnimationFrame(loop);})();
 })();
 
 /* ---------- music player ---------- */
@@ -416,6 +463,9 @@ $('next-btn').onclick=()=>{if(realAudio)audio.currentTime=Math.min(dur(),audio.c
 $('bar').onclick=e=>{const r=$('bar').getBoundingClientRect(),p=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width)); if(realAudio&&audio.duration)audio.currentTime=p*audio.duration; else simTime=p*dur(); render();};
 render();
 
+/* картинки/элементы нельзя таскать */
+document.addEventListener('dragstart',e=>e.preventDefault());
+
 /* ---------- защита от просмотра кода (deterrent) ---------- */
 if(CONFIG.protect){
   document.addEventListener('contextmenu',e=>e.preventDefault());
@@ -425,32 +475,37 @@ if(CONFIG.protect){
     if((e.ctrlKey||e.metaKey)&&e.shiftKey&&['i','j','c'].includes(k)) e.preventDefault();});
 }
 
-/* ---------- cursor particle trail (cursor_effects:"particles", чистый) ---------- */
+/* ---------- курсор рисуем сами (точка + шлейф-конфети) ----------
+   Системный курсор прячем, точку и частицы рисуем на одном canvas в одном rAF —
+   поэтому плавно и без рассинхрона. Только для мыши (на телефонах выключено). */
 (function(){
   if(matchMedia('(pointer:coarse)').matches) return;
+  document.documentElement.classList.add('cc');   // прячет системный курсор на всех элементах
   const cv=document.createElement('canvas');
-  cv.style.cssText='position:fixed;inset:0;z-index:40;pointer-events:none;';
+  cv.style.cssText='position:fixed;inset:0;z-index:9999;pointer-events:none;';
   document.body.appendChild(cv);
-  const ctx=cv.getContext('2d'); let W,H,parts=[];
+  const ctx=cv.getContext('2d'); let W,H;
   function resize(){W=cv.width=innerWidth; H=cv.height=innerHeight;}
   resize(); addEventListener('resize',resize);
-  let lx=null,ly=null;
-  addEventListener('mousemove',e=>{
-    if(lx!==null){const d=Math.hypot(e.clientX-lx,e.clientY-ly);
-      const n=Math.min(3,1+Math.floor(d/8));
-      for(let i=0;i<n;i++)parts.push({x:e.clientX,y:e.clientY,vx:(Math.random()-0.5)*0.6,vy:(Math.random()-0.5)*0.6,r:Math.random()*1.6+1,life:1});}
-    lx=e.clientX; ly=e.clientY;
-    if(parts.length>90)parts.splice(0,parts.length-90);
-  });
-  (function loop(){
+  let mx=innerWidth/2, my=innerHeight/2, px=mx, py=my, parts=[], vis=false;
+  addEventListener('mousemove',e=>{mx=e.clientX; my=e.clientY; vis=true;},{passive:true});
+  addEventListener('mouseout',e=>{ if(!e.relatedTarget) vis=false; });
+  function loop(){
+    requestAnimationFrame(loop);
     ctx.clearRect(0,0,W,H);
-    for(let i=parts.length-1;i>=0;i--){const p=parts[i];
-      p.x+=p.vx; p.y+=p.vy; p.life-=0.045;
+    const d=Math.hypot(mx-px,my-py);
+    if(vis && d>2){const n=Math.min(2,1+Math.floor(d/16));
+      for(let i=0;i<n;i++)parts.push({x:px+(mx-px)*Math.random(),y:py+(my-py)*Math.random(),r:Math.random()*1.3+0.7,life:1,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4});}
+    px=mx; py=my;
+    if(parts.length>70)parts.splice(0,parts.length-70);
+    for(let i=parts.length-1;i>=0;i--){const p=parts[i]; p.x+=p.vx; p.y+=p.vy; p.life-=0.05;
       if(p.life<=0){parts.splice(i,1); continue;}
-      ctx.globalAlpha=p.life*0.8; ctx.fillStyle='#ffffff';
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r*p.life,0,6.283); ctx.fill();}
-    ctx.globalAlpha=1; requestAnimationFrame(loop);
-  })();
+      ctx.globalAlpha=p.life*0.7; ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*p.life,0,6.283); ctx.fill();}
+    if(vis){ ctx.globalAlpha=0.30; ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(mx,my,7,0,6.283); ctx.fill();
+      ctx.globalAlpha=1; ctx.beginPath(); ctx.arc(mx,my,3.3,0,6.283); ctx.fill(); }
+    ctx.globalAlpha=1;
+  }
+  requestAnimationFrame(loop);
 })();
 
 /* ---------- enter -> pop + music ---------- */
